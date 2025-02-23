@@ -4,12 +4,14 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setUsers, removeUser } from "@/store/userSlice";
 import SearchUsers from "@/components/SearchUsers";
+import Loader from "./Loader";
 
 const UserList = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const users = useAppSelector((state) => state.users.users);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const filteredUsers = users.filter((user) =>
     `${user.name} ${user.email}`
       .toLowerCase()
@@ -44,12 +46,15 @@ const UserList = () => {
       }
     };
 
-    fetchUsers();
+    setIsLoading(true);
+    fetchUsers().finally(() => setIsLoading(false));
   }, [dispatch]);
 
   const handleRemoveUser = (userId: string) => {
     dispatch(removeUser(userId));
   };
+
+  if (isLoading) return <Loader />;
 
   return (
     <div className="flex-start gap-3 justify-start w-full">
