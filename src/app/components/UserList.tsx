@@ -1,14 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setUsers, removeUser } from "@/store/userSlice";
 import SearchUsers from "@/components/SearchUsers";
 import Loader from "./Loader";
+import UserCard from "./UserCard";
 
 const UserList = () => {
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const users = useAppSelector((state) => state.users.users);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -50,34 +49,28 @@ const UserList = () => {
     fetchUsers().finally(() => setIsLoading(false));
   }, [dispatch]);
 
-  const handleRemoveUser = (userId: string) => {
-    dispatch(removeUser(userId));
-  };
-
   if (isLoading) return <Loader />;
 
   return (
-    <div className="flex-start gap-3 justify-start w-full">
-      <SearchUsers searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+    <div className="flex-start flex-col gap-3 justify-start w-full">
+      <div className="flex flex-col gap-2 w-full">
+        <SearchUsers searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      </div>
 
-      <ul className="mt-4">
-        {filteredUsers.map((user) => (
-          <div className="flex flex-row gap-2 mt-2" key={user.id}>
-            <li
-              onClick={() => router.push(`/users/form?id=${user.id}`)}
-              className="cursor-pointer"
-            >
-              {user.name} - {user.email}
+      {filteredUsers.length > 0 ? (
+        <ul className="user-grid">
+          {filteredUsers.map((user) => (
+            <li key={user.id}>
+              <UserCard user={user} />
             </li>
-            <button
-              onClick={() => handleRemoveUser(user.id)}
-              className="text-red"
-            >
-              Remover
-            </button>
-          </div>
-        ))}
-      </ul>
+          ))}
+        </ul>
+      ) : (
+        <p className="no-data mt-2">
+          Nenhum usuário cadastrado. Clique no botão para adicionar ou atualize
+          a página.
+        </p>
+      )}
     </div>
   );
 };
