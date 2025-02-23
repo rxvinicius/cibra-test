@@ -11,12 +11,17 @@ export default {
       colors: {
         primary: "var(--primary)",
         secondary: "var(--secondary)",
-        light: "var(--light)",
+        "light-1": "var(--light-1)",
         "light-2": "var(--light-2)",
+        "dark-1": "var(--dark-1)",
+        blue: "var(--blue)",
         red: "var(--red)",
         green: "var(--green)",
         background: "var(--background)",
         foreground: "var(--foreground)",
+      },
+      screens: {
+        xs: "480px",
       },
     },
   },

@@ -5,21 +5,19 @@
 :root {
   --primary: #00df7c;
   --secondary: #000000;
-  --light: #7878a3;
+  --light-1: #bfbfbf;
   --light-2: #f2f2f2;
+  --dark-1: #1f1f22;
+
+  --blue: #3e63dd;
   --red: #ff5a5a;
   --green: #4bb543;
-
-  --background: #ffffff;
-  --foreground: #171717;
 
   background: var(--light-2);
 }
 
 body {
   color: var(--secondary);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -33,5 +31,45 @@ body {
 @layer utilities {
   .h1-bold {
     @apply text-[36px] font-bold leading-[100%] tracking-tighter;
+  }
+
+  /* UTILITIES */
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .flex-between {
+    @apply flex justify-between items-center;
+  }
+
+  .flex-start {
+    @apply flex justify-start items-center;
+  }
+
+  .no-data {
+    @apply text-dark-1 text-center w-full h-full;
+  }
+
+  /* User components */
+  .user-grid {
+    @apply w-full grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7;
+  }
+
+  .user-card {
+    @apply flex-center flex-col gap-4 border border-dark-1 rounded-[20px] px-5 py-8;
+  }
+}
+
+@layer components {
+  /* SHADCN COMPONENTS */
+
+  /* Button */
+  .button {
+    @apply text-secondary flex gap-2 rounded-full text-white font-semibold cursor-pointer !important;
+  }
+
+  /* Input */
+  .shad-input {
+    @apply h-12 bg-light-2 border-dark-1 rounded-2xl placeholder:text-dark-1 focus-visible:ring-0 focus-visible:ring-offset-0 ring-offset-0 !important;
   }
 }

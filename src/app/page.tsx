@@ -1,6 +1,6 @@
 "use client";
 import { UserList } from "@/components";
-import { Button } from "@radix-ui/themes";
+import { Button } from "@/components/ui";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -11,10 +11,7 @@ export default function Home() {
       <div className="flex items-center justify-between w-full">
         <h1 className="h1-bold">Usuários</h1>
 
-        <Button
-          className="text-white p-3 rounded-full cursor-pointer"
-          onClick={() => router.push("/users/form")}
-        >
+        <Button onClick={() => router.push("/users/form")}>
           Adicionar Usuário
         </Button>
       </div>
