@@ -10,7 +10,7 @@ const UserList = () => {
   const dispatch = useAppDispatch();
   const users = useAppSelector((state) => state.users.users);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const filteredUsers = users.filter((user) =>
     `${user.name} ${user.email}`
       .toLowerCase()
@@ -23,6 +23,7 @@ const UserList = () => {
 
       if (storedUsers && storedUsers !== "[]") {
         dispatch(setUsers(JSON.parse(storedUsers)));
+        setIsLoading(false);
       } else {
         try {
           const response = await fetch(
@@ -41,12 +42,13 @@ const UserList = () => {
           localStorage.setItem("users", JSON.stringify(usersWithImages));
         } catch (error) {
           console.error("Erro ao buscar usuários:", error);
+        } finally {
+          setIsLoading(false);
         }
       }
     };
 
-    setIsLoading(true);
-    fetchUsers().finally(() => setIsLoading(false));
+    fetchUsers();
   }, [dispatch]);
 
   if (isLoading) return <Loader />;
