@@ -47,6 +47,10 @@ body {
     @apply text-[14px] text-red font-bold leading-[140%];
   }
 
+  .header {
+    @apply flex-start gap-3 justify-start;
+  }
+
   /* UTILITIES */
   .flex-center {
     @apply flex justify-center items-center;

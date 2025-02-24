@@ -3,6 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui";
 import { FileUploader, Input, Loader } from "@/components";
 import { UserFormData, User } from "@/types";
@@ -85,9 +86,12 @@ const UserFormPage = () => {
 
   return (
     <div className="flex flex-col flex-1 items-start gap-5 py-16 px-5 md:px-8 lg:p-14">
-      <h1 className="h1-bold">
-        {existingUser ? "Atualizar " : "Cadastrar "} Usuário
-      </h1>
+      <div className="header">
+        <Image src="/icons/user.svg" alt="User icon" width={46} height={46} />
+        <h1 className="h1-bold">
+          {existingUser ? "Atualizar " : "Cadastrar "} Usuário
+        </h1>
+      </div>
 
       <form
         onSubmit={handleSubmit(onSubmit)}

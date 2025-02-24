@@ -39,9 +39,9 @@ const FileUploader = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
             <Image
               src={fileUrl}
               alt="User photo preview"
-              className="w-32 h-32 object-cover rounded-full"
-              width={32}
-              height={32}
+              className="w-[128px] h-[128px] object-cover rounded-full"
+              width={128}
+              height={128}
             />
           </div>
           <p className="text-secondary">

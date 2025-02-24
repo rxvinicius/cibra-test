@@ -17,8 +17,6 @@ export default {
         blue: "var(--blue)",
         red: "var(--red)",
         green: "var(--green)",
-        background: "var(--background)",
-        foreground: "var(--foreground)",
       },
       screens: {
         xs: "480px",
