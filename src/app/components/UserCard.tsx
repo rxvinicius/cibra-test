@@ -19,15 +19,13 @@ const UserCard = ({ user }: UserCardProps) => {
 
   return (
     <div className="user-card">
-      {user.photo && (
-        <Image
-          src={user.photo}
-          alt={`${user.name} photo`}
-          className="rounded-full object-cover w-[74px] h-[74px]"
-          width={74}
-          height={74}
-        />
-      )}
+      <Image
+        src={user.photo || "/icons/profile-placeholder.svg"}
+        alt={`${user.name} photo`}
+        className="rounded-full object-cover w-[74px] h-[74px]"
+        width={74}
+        height={74}
+      />
 
       <div className="flex-initial flex-col gap-1">
         <p className="h3-bold text-secondary text-center line-clamp-1 mb-2">

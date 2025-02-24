@@ -4,12 +4,11 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui";
-import { Input } from "@/components/Input";
+import { FileUploader, Input, Loader } from "@/components";
 import { UserFormData, User } from "@/types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addUser, setUsers } from "@/store/userSlice";
 import { v4 as uuidv4 } from "uuid";
-import FileUploader from "@/components/FileUploader";
 
 const UserFormPage = () => {
   const searchParams = useSearchParams();
@@ -23,6 +22,7 @@ const UserFormPage = () => {
   const [preview, setPreview] = useState<string | null>(
     existingUser?.photo || null
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     control,
@@ -50,39 +50,37 @@ const UserFormPage = () => {
     }
   };
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setPreview(URL.createObjectURL(file));
-      setValue("photo", file);
-    }
-  };
-
   const onSubmit = async (data: UserFormData) => {
-    let imageUrl = existingUser?.photo || "";
+    setIsLoading(true);
 
-    if (data.photo && data.photo instanceof File) {
-      const reader = new FileReader();
-      reader.readAsDataURL(data.photo);
-      await new Promise((resolve) => (reader.onloadend = resolve));
-      imageUrl = reader.result as string;
+    try {
+      let imageUrl = existingUser?.photo || "";
+
+      if (data.photo && data.photo instanceof File) {
+        const reader = new FileReader();
+        reader.readAsDataURL(data.photo);
+        await new Promise((resolve) => (reader.onloadend = resolve));
+        imageUrl = reader.result as string;
+      }
+
+      const user: User = {
+        id: existingUser ? existingUser.id : uuidv4(),
+        ...data,
+        photo: imageUrl,
+      };
+
+      if (existingUser) {
+        dispatch(
+          setUsers(users.map((u) => (u.id === existingUser.id ? user : u)))
+        );
+      } else {
+        dispatch(addUser(user));
+      }
+
+      router.push("/");
+    } catch (error) {
+      setIsLoading(false);
     }
-
-    const user: User = {
-      id: existingUser ? existingUser.id : uuidv4(),
-      ...data,
-      photo: imageUrl,
-    };
-
-    if (existingUser) {
-      dispatch(
-        setUsers(users.map((u) => (u.id === existingUser.id ? user : u)))
-      );
-    } else {
-      dispatch(addUser(user));
-    }
-
-    router.push("/");
   };
 
   return (
@@ -91,7 +89,10 @@ const UserFormPage = () => {
         {existingUser ? "Atualizar " : "Cadastrar "} Usuário
       </h1>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-4 md:w-[60%] w-full"
+      >
         <div>
           <label className="block">Foto</label>
           <FileUploader
@@ -110,7 +111,7 @@ const UserFormPage = () => {
             render={({ field }) => <Input {...field} />}
           />
           {errors.name && (
-            <span className="text-red-500">{errors.name.message}</span>
+            <span className="small-error">{errors.name.message}</span>
           )}
         </div>
 
@@ -124,7 +125,7 @@ const UserFormPage = () => {
             render={({ field }) => <Input {...field} />}
           />
           {errors.email && (
-            <span className="text-red-500">{errors.email.message}</span>
+            <span className="small-error">{errors.email.message}</span>
           )}
         </div>
 
@@ -132,7 +133,8 @@ const UserFormPage = () => {
           <Button className="bg-red" onClick={() => router.push("/")}>
             Cancelar
           </Button>
-          <Button type="submit" className="bg-primary">
+          <Button type="submit" className="bg-primary" disabled={isLoading}>
+            {isLoading && <Loader size="small" />}
             {existingUser ? "Atualizar" : "Adicionar"}
           </Button>
         </div>
