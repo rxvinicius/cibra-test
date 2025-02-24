@@ -95,7 +95,10 @@ const UserFormPage = () => {
       </div>
 
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(onSubmit)(e);
+        }}
         className="space-y-4 md:w-[60%] w-full"
       >
         <div>
