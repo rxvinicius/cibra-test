@@ -7,4 +7,4 @@ Projeto desenvolvido para o desafio técnico da Cibra Fertilizantes.
 - Clone esse repositório
 - `yarn install` para instalar dependências
 - `yarn dev` para instalar dependências
-- Acesse [http://localhost:5173S](http://localhost:5173S) com seu navegador para ver o resultado.
+- Acesse [http://localhost:5173S](http://localhost:5173) com seu navegador para ver o resultado.
