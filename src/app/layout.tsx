@@ -1,10 +1,12 @@
-"use client";
+import ClientLayout from "./ClientLayout";
 
-import { Provider } from "react-redux";
-import { Theme } from "@radix-ui/themes";
-import { store } from "@/store/store";
-import "@radix-ui/themes/styles.css";
-import "./globals.css";
+export const metadata = {
+  title: "Cibra Test",
+  description: "Desafio Técnico da Cibra",
+  icons: {
+    icon: "/favicon.png",
+  },
+};
 
 export default function RootLayout({
   children,
@@ -12,11 +14,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-br">
       <body>
-        <Provider store={store}>
-          <Theme>{children}</Theme>
-        </Provider>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
