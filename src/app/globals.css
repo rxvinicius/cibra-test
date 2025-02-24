@@ -5,7 +5,7 @@
 :root {
   --primary: #00df7c;
   --secondary: #000000;
-  --light-1: #bfbfbf;
+  --light-1: #8f8d8d;
   --light-2: #f2f2f2;
   --dark-1: #1f1f22;
 
@@ -13,11 +13,13 @@
   --red: #ff5a5a;
   --green: #4bb543;
 
-  background: var(--light-2);
+  background-color: var(--light-2) !important;
 }
 
 body {
   color: var(--secondary);
+  background-color: var(--light-2) !important;
+
   margin: 0;
   padding: 0;
 }
@@ -31,6 +33,14 @@ body {
 @layer utilities {
   .h1-bold {
     @apply text-[36px] font-bold leading-[100%] tracking-tighter;
+  }
+
+  .base-medium {
+    @apply text-[15px] font-medium leading-[140%];
+  }
+
+  .small-regular {
+    @apply text-[14px] font-normal leading-[140%];
   }
 
   /* UTILITIES */
@@ -58,6 +68,11 @@ body {
   .user-card {
     @apply flex-center flex-col gap-4 border border-dark-1 rounded-[20px] px-5 py-8;
   }
+
+  /* File Uploader */
+  .file_uploader-img {
+    @apply rounded-full object-cover object-top;
+  }
 }
 
 @layer components {
@@ -65,7 +80,7 @@ body {
 
   /* Button */
   .button {
-    @apply text-secondary flex gap-2 rounded-full text-white font-semibold cursor-pointer !important;
+    @apply text-secondary flex gap-2 rounded-lg text-white font-semibold cursor-pointer !important;
   }
 
   /* Input */

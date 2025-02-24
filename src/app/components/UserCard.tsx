@@ -23,9 +23,9 @@ const UserCard = ({ user }: UserCardProps) => {
         <Image
           src={user.photo}
           alt={`${user.name} photo`}
-          className="rounded-full"
-          width={68}
-          height={68}
+          className="rounded-full object-cover w-[74px] h-[74px]"
+          width={74}
+          height={74}
         />
       )}
 
