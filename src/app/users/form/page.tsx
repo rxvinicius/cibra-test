@@ -1,8 +1,8 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
-import { useForm, Controller } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui";
 import { FileUploader, Input, Loader } from "@/components";
@@ -81,6 +81,7 @@ const UserFormPage = () => {
       router.push("/");
     } catch (error) {
       setIsLoading(false);
+      console.error("Erro ao buscar usuários:", error);
     }
   };
 

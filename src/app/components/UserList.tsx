@@ -1,10 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setUsers, removeUser } from "@/store/userSlice";
+import { setUsers } from "@/store/userSlice";
 import SearchUsers from "@/components/SearchUsers";
 import Loader from "./Loader";
 import UserCard from "./UserCard";
+import { User } from "@/types";
 
 const UserList = () => {
   const dispatch = useAppDispatch();
@@ -31,7 +32,7 @@ const UserList = () => {
           );
           const data = await response.json();
 
-          const usersWithImages = data.map((user: any) => ({
+          const usersWithImages = data.map((user: User) => ({
             id: user.id.toString(),
             name: user.name,
             email: user.email,
